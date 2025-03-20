@@ -810,13 +810,22 @@ if not qbit_options:
 else:
     qb_opt = {**qbit_options}
     for k, v in list(qb_opt.items()):
-        if v in ["", "*"]:
+        if v in ['', '*']:
             del qb_opt[k]
     qb_client.app_set_preferences(qb_opt)
 
-log_info("Creating client from BOT_TOKEN")
-bot = tgClient('bot', TELEGRAM_API, TELEGRAM_HASH, bot_token=BOT_TOKEN, workers=1000,
-               parse_mode=enums.ParseMode.HTML).start()
+LOGGER.info('Creating client Pyrofork V%s...', __version__)
+kwargs = {'workers': 1000,  'parse_mode': ParseMode.HTML}
+if int(__version__.replace('.', '')[:3]) > 221:
+    kwargs.update({'max_concurrent_transmissions': 1000})
+bot: tgClient = tgClient('bot', TELEGRAM_API, TELEGRAM_HASH, bot_token=BOT_TOKEN, **kwargs).start()
+
 bot_loop = bot.loop
 bot_name = bot.me.username
 scheduler = AsyncIOScheduler(timezone=str(get_localzone()), event_loop=bot_loop)
+
+if not aria2_options:
+    aria2_options = aria2.client.get_global_option()
+else:
+    a2c_glo = {op: aria2_options[op] for op in aria2c_global if op in aria2_options}
+    aria2.set_global_options(a2c_glo)
