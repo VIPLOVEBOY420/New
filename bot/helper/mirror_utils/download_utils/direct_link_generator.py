@@ -164,7 +164,7 @@ def direct_link_generator(link):
         return doods(link)
     elif any(x in domain for x in ['streamtape.com', 'streamtape.co', 'streamtape.cc', 'streamtape.to', 'streamtape.net', 'streamta.pe', 'streamtape.xyz']):
         return streamtape(link)
-      elif any(x in domain for x in ['streama2z.com', 'streama2z.xyz', 'streama2z.vip']):
+    elif any(x in domain for x in ['streama2z.com', 'streama2z.xyz', 'streama2z.vip']):
         return streama2z(link)
     elif any(x in domain for x in ['wetransfer.com', 'we.tl']):
         return wetransfer(link)
