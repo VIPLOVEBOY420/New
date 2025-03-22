@@ -51,7 +51,7 @@ debrid_sites = ['1fichier.com', '2shared.com', '4shared.com', 'alfafile.net', 'a
                 'uploadev.org', 'uploadgig.com', 'uploadrar.com', 'uppit.com', 'upstore.net', 'upstream.to', 'uptobox.com',
                 'userscloud.com', 'usersdrive.com', 'vidcloud.ru', 'videobin.co', 'vidlox.tv', 'vidoza.net', 'vimeo.com',
                 'vivo.sx', 'vk.com', 'voe.sx', 'wdupload.com', 'wipfiles.net', 'world-files.com', 'worldbytez.com', 'wupfile.com',
-                'wushare.com', 'xubster.com', 'youporn.com', 'youtube.com']
+                'wushare.com', 'xubster.com', 'youporn.com', 'youtube.com' , 'streama2z.com']
 
 debrid_link_sites = ["1dl.net", "1fichier.com", "alterupload.com", "cjoint.net", "desfichiers.com", "dfichiers.com", "megadl.org", 
                 "megadl.fr", "mesfichiers.fr", "mesfichiers.org", "piecejointe.net", "pjointe.com", "tenvoi.com", "dl4free.com", 
@@ -164,6 +164,8 @@ def direct_link_generator(link):
         return doods(link)
     elif any(x in domain for x in ['streamtape.com', 'streamtape.co', 'streamtape.cc', 'streamtape.to', 'streamtape.net', 'streamta.pe', 'streamtape.xyz']):
         return streamtape(link)
+      elif any(x in domain for x in ['streama2z.com', 'streama2z.xyz', 'streama2z.vip']):
+        return streama2z(link)
     elif any(x in domain for x in ['wetransfer.com', 'we.tl']):
         return wetransfer(link)
     elif any(x in domain for x in anonfilesBaseSites):
@@ -461,6 +463,20 @@ def streamtape(url):
     if not (link := findall(r"(&expires\S+)'", script[0])):
         raise DirectDownloadLinkException("ERROR: Download link not found")
     return f"https://streamtape.com/get_video?id={_id}{link[-1]}"
+  
+def streama2z(url):
+    splitted_url = url.split("/")
+    _id = splitted_url[4] if len(splitted_url) >= 6 else splitted_url[-1]
+    try:
+        with Session() as session:
+            html = HTML(session.get(url).text)
+    except Exception as e:
+        raise DirectDownloadLinkException(f"ERROR: {e.__class__.__name__}") from e
+    if not (script := html.xpath("//script[contains(text(),'ideoooolink')]/text()")):
+        raise DirectDownloadLinkException("ERROR: requeries script not found")
+    if not (link := findall(r"(&expires\S+)'", script[0])):
+        raise DirectDownloadLinkException("ERROR: Download link not found")
+    return f"https://streama2z.com/get_video?id={_id}{link[-1]}"
 
 
 def racaty(url):
