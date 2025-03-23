@@ -1,22 +1,33 @@
-from time import sleep
-from requests import get as rget
-from os import environ
-from logging import error as logerror
+import os
+import time
+import logging
 
-BASE_URL = environ.get('BASE_URL_HK', None)
+import requests
+
+BASE_URL = os.environ.get("BASE_URL", None)
+
 try:
-    if len(BASE_URL) == 0:
+    if not BASE_URL:
         raise TypeError
     BASE_URL = BASE_URL.rstrip("/")
 except TypeError:
     BASE_URL = None
-PORT = environ.get('PORT', None)
-if PORT is not None and BASE_URL is not None:
+
+PORT = os.environ.get("PORT", None)
+
+
+def check_status():
+    try:
+        requests.get(BASE_URL).status_code
+    except Exception as e:
+        logging.error(f"alive.py: {e}")
+        return False
+    return True
+
+
+if PORT and BASE_URL:
     while True:
-        try:
-            rget(BASE_URL).status_code
-            sleep(600)
-        except Exception as e:
-            logerror(f"alive.py: {e}")
-            sleep(2)
-            continue
+        if check_status():
+            time.sleep(400)
+        else:
+            time.sleep(2)
