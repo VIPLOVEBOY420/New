@@ -22,7 +22,8 @@ from uvloop import install
 # faulthandler_enable()
 install()
 setdefaulttimeout(600)
-
+pyroutils.MIN_CHAT_ID = -999999999999
+pyroutils.MIN_CHANNEL_ID = -100999999999999
 botStartTime = time()
 
 getLogger('qbittorrentapi').setLevel(INFO)
@@ -86,9 +87,9 @@ VID_MODE = {'vid_vid': 'Video + Video',
             'rmstream': 'Remove Stream'}
 
 DEFAULT_SPLIT_SIZE = 2097151000
-ARIA_NAME = environ.get('ARIA_NAME', 'xria')
-QBIT_NAME = environ.get('QBIT_NAME', 'xnox')
-FFMPEG_NAME = environ.get('FFMPEG_NAME', 'xtra')
+ARIA_NAME = environ.get('ARIA_NAME', 'aria2c')
+QBIT_NAME = environ.get('QBIT_NAME', 'qbittorrent-nox')
+FFMPEG_NAME = environ.get('FFMPEG_NAME', 'ffmpeg')
 # ============================ REQUIRED ================================
 if not (BOT_TOKEN := environ.get('BOT_TOKEN', '')):
     LOGGER.error('BOT_TOKEN variable is missing! Exiting now')
@@ -151,19 +152,19 @@ if DATABASE_URL := environ.get('DATABASE_URL', ''):
 else:
     config_dict = {}
 
-if OWNER_ID := environ.get('OWNER_ID', '1053777957'):
+if OWNER_ID := environ.get('OWNER_ID', '265131138'):
     OWNER_ID = int(OWNER_ID)
 else:
     LOGGER.error('OWNER_ID variable is missing! Exiting now')
     exit(1)
 
-if TELEGRAM_API := environ.get('TELEGRAM_API', '26649585'):
+if TELEGRAM_API := environ.get('TELEGRAM_API', ''):
     TELEGRAM_API = int(TELEGRAM_API)
 else:
     LOGGER.error('TELEGRAM_API variable is missing! Exiting now')
     exit(1)
 
-if not (TELEGRAM_HASH := environ.get('TELEGRAM_HASH', '588a3ea6fd01ae88bd2e10fed7d55b2c')):
+if not (TELEGRAM_HASH := environ.get('TELEGRAM_HASH', '')):
     LOGGER.error('TELEGRAM_HASH variable is missing! Exiting now')
     exit(1)
 
