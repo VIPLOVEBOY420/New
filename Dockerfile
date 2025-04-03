@@ -14,6 +14,15 @@ RUN apt-get update && apt-get install -y software-properties-common && \
     libpython3.12 libpython3.12-dev && \
     python3.12 -m ensurepip && \
     python3.12 -m pip install setuptools
+
+RUN apt-get update && apt-get install -y software-properties-common wget && \
+    add-apt-repository -y ppa:deadsnakes/ppa && \
+    apt-get update && \
+    apt-get install -y python3.12 python3.12-dev python3.12-venv \
+    libpython3.12 libpython3.12-dev && \
+    wget https://bootstrap.pypa.io/get-pip.py && \
+    python3.12 get-pip.py
+    
 # Install Python 3.12 and essential dependencies
 RUN apt-get update && apt-get install -y software-properties-common && \
     add-apt-repository -y ppa:deadsnakes/ppa && \
