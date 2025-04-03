@@ -7,7 +7,13 @@ ENV PATH="/usr/local/bin:$PATH"
 
 WORKDIR /usr/src/app
 RUN chmod 777 /usr/src/app
-RUN python3.12 -m pip install setuptools
+RUN apt-get update && apt-get install -y software-properties-common && \
+    add-apt-repository -y ppa:deadsnakes/ppa && \
+    apt-get update && \
+    apt-get install -y python3.12 python3.12-dev python3.12-venv python3-pip \
+    libpython3.12 libpython3.12-dev && \
+    python3.12 -m ensurepip && \
+    python3.12 -m pip install setuptools
 # Install Python 3.12 and essential dependencies
 RUN apt-get update && apt-get install -y software-properties-common && \
     add-apt-repository -y ppa:deadsnakes/ppa && \
