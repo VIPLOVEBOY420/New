@@ -85,3 +85,4 @@ tgcrypto
 uvloop
 xattr
 yt-dlp
+pyroutils
