@@ -6,7 +6,7 @@ from dotenv import load_dotenv, dotenv_values
 from logging import getLogger, FileHandler, StreamHandler, basicConfig, INFO, ERROR, warning as log_warning
 from os import remove as osremove, path as ospath, environ, getcwd
 from pymongo import MongoClient
-from pyrogram import Client as tgClient, __version__
+from pyrogram import Client as tgClient, __version__ , utils as pyroutils
 from pyrogram.enums import ParseMode
 from qbittorrentapi import Client as qbClient
 from re import sub as resub
