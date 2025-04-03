@@ -6,7 +6,7 @@ from dotenv import load_dotenv, dotenv_values
 from logging import getLogger, FileHandler, StreamHandler, basicConfig, INFO, ERROR, warning as log_warning
 from os import remove as osremove, path as ospath, environ, getcwd
 from pymongo import MongoClient
-from pyrogram import Client as tgClient, __version__ , utils as pyroutils
+from pyrogram import Client as tgClient, __version__
 from pyrogram.enums import ParseMode
 from qbittorrentapi import Client as qbClient
 from re import sub as resub
@@ -22,8 +22,7 @@ from uvloop import install
 # faulthandler_enable()
 install()
 setdefaulttimeout(600)
-pyroutils.MIN_CHAT_ID = -999999999999
-pyroutils.MIN_CHANNEL_ID = -100999999999999
+
 botStartTime = time()
 
 getLogger('qbittorrentapi').setLevel(INFO)
